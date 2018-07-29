@@ -95,7 +95,7 @@ $sms = $citcall->sms([
 The API response data can be accessed as array properties of the sms. 
 
 ```php
-print_r($async_miscall);
+print_r($sms);
 ```
 
 Contribute
