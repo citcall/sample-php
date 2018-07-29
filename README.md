@@ -63,7 +63,7 @@ print_r($sync_miscall);
 
 To use [Citcall's Miscall Sync API][docs_miscall_async] to Asynchronous miscall, call the `$citcall->async_miscall()` method.
 
-The API can be called directly, using a simple array of parameters, the keys match the [parameters of the API][docs_miscall_sync].
+The API can be called directly, using a simple array of parameters, the keys match the [parameters of the API][docs_miscall_async].
 
 ```php
 $async_miscall = $citcall->async_miscall([
@@ -82,7 +82,7 @@ print_r($async_miscall);
 
 To use [Citcall's Miscall Sync API][docs_sms] to send an SMS message, call the `$citcall->sms()` method.
 
-The API can be called directly, using a simple array of parameters, the keys match the [parameters of the API][docs_miscall_sync].
+The API can be called directly, using a simple array of parameters, the keys match the [parameters of the API][docs_sms].
 
 ```php
 $sms = $citcall->sms([
