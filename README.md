@@ -109,6 +109,8 @@ print_r($async_miscall);
 
 ### Callback Asynchronous miscall
 
+To add callback on dashboard It is still manually doing by Citcall’s administrator, please send the callback url to our team.
+
 See this [Example](https://github.com/citcall/sample-php/blob/master/examples/callback_async_miscall.php) to use callback.
 
 ### Verify MOTP
@@ -150,6 +152,12 @@ The API response data can be accessed as array properties of the sms.
 ```php
 print_r($sms);
 ```
+
+### Callback SMS
+
+To add callback on dashboard It is still manually doing by Citcall’s administrator, please send the callback url to our team.
+
+See this [Example](https://github.com/citcall/sample-php/blob/master/examples/callback_async_miscall.php) to use callback.
 
 Contribute
 ----------
