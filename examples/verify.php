@@ -15,11 +15,11 @@ require_once '../vendor/autoload.php';
 $citcall = new Citcall\Citcall(USERID,APIKEY);
 
 //make verify using simple api params
-$miscall = $citcall->verify_motp([
+$verify = $citcall->verify_motp([
 	"msisdn" => MSISDN,
 	"trxid" => TRXID, //Trxid from miscall request response
 	"token" => TOKEN
 ]);
 
 //array access provides response data
-print_r($miscall);
+print_r($verify);
