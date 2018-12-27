@@ -13,6 +13,13 @@ To install the PHP client library to your project, we recommend using [Composer]
 composer require citcall/api:dev-master
 ```
 
+> You don't need to clone this repository to use this library in your own projects. Use Composer to install it from Packagist.
+
+If you're new to Composer, here are some resources that you may find useful:
+
+* [Composer's Getting Started page](https://getcomposer.org/doc/00-intro.md) from Composer project's documentation.
+* [A Beginner's Guide to Composer](https://scotch.io/tutorials/a-beginners-guide-to-composer) from the good people at ScotchBox.
+
 ### Install source from GitHub
 To install the source code:
 
@@ -99,6 +106,10 @@ The API response data can be accessed as array properties of the async_miscall.
 ```php
 print_r($async_miscall);
 ```
+
+### Callback Asynchronous miscall
+
+See this [Example](https://getcomposer.org/doc/00-intro.md) to use callback.
 
 ### Verify MOTP
 
