@@ -7,7 +7,7 @@ $citcall = new Citcall\Citcall(USERID,APIKEY);
 
 //send message using simple api params
 $sms = $citcall->sms([
-	'senderid' => 'citcall',
+	'senderid' => 'CITCALL',
 	'msisdn' => MSISDN,
 	'text' => 'Test message from the Citcall PHP'
 ]);
