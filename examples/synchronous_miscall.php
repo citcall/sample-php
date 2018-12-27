@@ -1,4 +1,13 @@
 <?php
+/**
+|-------------------------------------------------------------------
+| CITCALL
+|-------------------------------------------------------------------
+| before you connect to the citcall API make sure that:
+| 1. You have read the citcall API documentation
+| 2. your userid has been registered and your IP has been filtered in citcall system
+|
+*/
 //example of make a Synchronous miscall using an userid / API key
 require_once '../vendor/autoload.php';
 

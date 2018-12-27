@@ -8,18 +8,18 @@
 | 2. your userid has been registered and your IP has been filtered in citcall system
 |
 */
-//example of sending an sms using an userid / API key
+//example of make a Verify OTP using an userid / API key.
 require_once '../vendor/autoload.php';
 
 //create citcall with userid and API key
 $citcall = new Citcall\Citcall(USERID,APIKEY);
 
-//send message using simple api params
-$sms = $citcall->sms([
-	'senderid' => 'CITCALL',
-	'msisdn' => MSISDN,
-	'text' => 'Test message from the Citcall PHP'
+//make verify using simple api params
+$miscall = $citcall->verify_motp([
+	"msisdn" => MSISDN,
+	"trxid" => TRXID, //Trxid from miscall request response
+	"token" => TOKEN
 ]);
 
 //array access provides response data
-print_r($sms);
+print_r($miscall);
