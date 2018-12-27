@@ -53,6 +53,17 @@ $sync_miscall = $citcall->sync_miscall([
 ]);
 ```
 
+If you want to able to do verify later use this example.
+
+```php
+$sync_miscall = $citcall->sync_miscall([
+	'msisdn' => MSISDN,
+	'gateway' => GATEWAY,
+	'valid_time' => TIME_VALID,
+	'limit_try' => LIMIT_TRY
+]);
+```
+
 The API response data can be accessed as array properties of the sync_miscall. 
 
 ```php
@@ -72,10 +83,41 @@ $async_miscall = $citcall->async_miscall([
 ]);
 ```
 
+If you want to able to do verify later use this example.
+
+```php
+$async_miscall = $citcall->async_miscall([
+	'msisdn' => MSISDN,
+	'gateway' => GATEWAY,
+	'valid_time' => TIME_VALID,
+	'limit_try' => LIMIT_TRY
+]);
+```
+
 The API response data can be accessed as array properties of the async_miscall. 
 
 ```php
 print_r($async_miscall);
+```
+
+### Verify MOTP
+
+To use [Citcall's Verify MOTP API][docs_verify] to verify MOTP, call the `$citcall->verify_motp()` method.
+
+The API can be called directly, using a simple array of parameters, the keys match the [parameters of the API][docs_verify].
+
+```php
+$verify_motp = $citcall->verify_motp([
+	'msisdn' => MSISDN,
+	'trxid' => TRXID,
+	'token' => TOKEN
+]);
+```
+
+The API response data can be accessed as array properties of the verify_motp. 
+
+```php
+print_r($verify_motp);
 ```
 
 ### SMS
@@ -111,4 +153,5 @@ Contribute
 [docs_miscall_sync]: https://docs.citcall.com/#miscall
 [docs_miscall_async]: https://docs.citcall.com/async/
 [docs_sms]: https://docs.citcall.com/#sms
+[docs_verify]: https://docs.citcall.com/#verify
 [the repository]: https://github.com/citcall/sample-php
