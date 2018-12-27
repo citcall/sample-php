@@ -157,7 +157,7 @@ print_r($sms);
 
 To add callback on dashboard It is still manually doing by Citcall’s administrator, please send the callback url to our team.
 
-See this [Example](https://github.com/citcall/sample-php/blob/master/examples/callback_async_miscall.php) to use callback.
+See this [Example](https://github.com/citcall/sample-php/blob/master/examples/callback_sms.php) to use callback.
 
 Contribute
 ----------
