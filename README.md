@@ -109,7 +109,7 @@ print_r($async_miscall);
 
 ### Callback Asynchronous miscall
 
-See this [Example](https://getcomposer.org/doc/00-intro.md) to use callback.
+See this [Example](https://github.com/citcall/sample-php/blob/master/examples/callback_async_miscall.php) to use callback.
 
 ### Verify MOTP
 
