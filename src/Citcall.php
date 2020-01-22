@@ -23,6 +23,7 @@ class Citcall {
 	const METHOD_SYNC_MISCALL	= "/call";
 	const METHOD_ASYNC_MISCALL	= "/asynccall";
 	const METHOD_SMS 			= "/sms";
+	const METHOD_SMSOTP			= "/smsotp";
 	const METHOD_VERIFY_MOTP 	= "/verify";
 
 	/**
@@ -244,54 +245,18 @@ class Citcall {
 			$msisdn = $param['msisdn'];
 			$senderid = $param['senderid'];
 			$text = $param['text'];
-			$array_baru = array();
-			$array = explode(",",$msisdn);
-			foreach($array as $v) {
-				$msisdn = $this->cleanMsisdn($v);
-				$msisdn = preg_replace('/[^0-9]/', '',$msisdn);
-				if (substr($msisdn,0,2)=='62') {
-					if(strlen($msisdn) > 10 && strlen($msisdn) < 15) {
-						$prefix = substr($msisdn,0,5);
-						if(strlen($msisdn) > 13) {
-							if($this->isThree($prefix)) {
-								array_push($array_baru,$msisdn);
-							} else {
-								$ret = array(
-									"rc" => "06",
-									"info" => "invalid msisdn or msisdn has invalid format!"
-								);
-								return $ret;
-							}
-						} else {
-							array_push($array_baru,$msisdn);
-						}
-					} else {
-						$ret = array(
-							"rc" => "06",
-							"info" => "invalid msisdn or msisdn has invalid format!"
-						);
-						return $ret;
-					}
-				} else {
-					if(strlen($msisdn) > 9 && strlen($msisdn) < 18) {
-						array_push($array_baru,$msisdn);
-					} else {
-						$ret = array(
-							"rc" => "06",
-							"info" => "invalid msisdn or msisdn has invalid format!"
-						);
-						return $ret;
-					}
-				}
-			}
-			$msisdn = implode(",",$array_baru);
+
+			$msisdn = $this->formattingMsisdn($msisdn);
+
 			if(strtolower(trim($senderid)) == "citcall")
 				$senderid = strtoupper($senderid);
+
 			$param_hit = array(
 				"msisdn" => $msisdn,
 				"senderid" => $senderid,
 				"text" => $text 
 			);
+
 			$method = "sms";
 			$ret = $this->sendRequest($param_hit,$method);
 		} else {
@@ -304,7 +269,93 @@ class Citcall {
 		return json_decode($ret,true);
 	}
 
-	/**
+	private function formattingMsisdn($origin_msisdn)
+    {
+        $origin_msisdn = explode(",", $origin_msisdn);
+
+        $array_baru = array();
+
+        foreach($origin_msisdn as $v) {
+            $msisdn = $this->cleanMsisdn($v);
+            $msisdn = preg_replace('/[^0-9]/', '',$msisdn);
+            if (substr($msisdn,0,2)=='62') {
+                if(strlen($msisdn) > 10 && strlen($msisdn) < 15) {
+                    $prefix = substr($msisdn,0,5);
+                    if(strlen($msisdn) > 13) {
+                        if($this->isThree($prefix)) {
+                            array_push($array_baru,$msisdn);
+                        } else {
+                            $ret = array(
+                                "rc" => "06",
+                                "info" => "invalid msisdn or msisdn has invalid format!"
+                            );
+                            return $ret;
+                        }
+                    } else {
+                        array_push($array_baru,$msisdn);
+                    }
+                } else {
+                    $ret = array(
+                        "rc" => "06",
+                        "info" => "invalid msisdn or msisdn has invalid format!"
+                    );
+                    return $ret;
+                }
+            } else {
+                if(strlen($msisdn) > 9 && strlen($msisdn) < 18) {
+                    array_push($array_baru,$msisdn);
+                } else {
+                    $ret = array(
+                        "rc" => "06",
+                        "info" => "invalid msisdn or msisdn has invalid format!"
+                    );
+                    return $ret;
+                }
+            }
+        }
+
+        return implode(",", $array_baru);
+    }
+
+
+    public function smsotp(array $param) {
+        if(
+            array_key_exists("msisdn", $param)
+            && array_key_exists("senderid", $param)
+            && array_key_exists("text", $param)
+            && array_key_exists("token", $param)
+        ) {
+            $msisdn = $param['msisdn'];
+            $senderid = $param['senderid'];
+            $text = $param['text'];
+            $token = $param['token'];
+
+            $msisdn = $this->formattingMsisdn($msisdn);
+
+            if(strtolower(trim($senderid)) == "citcall")
+                $senderid = strtoupper($senderid);
+
+            $param_hit = array(
+                "msisdn" => $msisdn,
+                "senderid" => $senderid,
+                "text" => $text,
+                "token" => $token
+            );
+
+            $method = "smsotp";
+            $ret = $this->sendRequest($param_hit,$method);
+        } else {
+            $ret = array(
+                "rc" => "88",
+                "info" => "missing parameter"
+            );
+            return $ret;
+        }
+        return json_decode($ret,true);
+    }
+
+
+    /**
 	 * Verify
 	 *
 	 * @param	array	$param
@@ -395,6 +446,9 @@ class Citcall {
 				break;
 			case 'sms':
 				$action = self::METHOD_SMS;
+				break;
+			case 'smsotp':
+				$action = self::METHOD_SMSOTP;
 				break;
 			case 'verify_motp':
 				$action = self::METHOD_VERIFY_MOTP;
