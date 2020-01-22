@@ -153,6 +153,30 @@ The API response data can be accessed as array properties of the sms.
 print_r($sms);
 ```
 
+
+### SMS OTP
+
+To use [Citcall's SMS API](https://docs.citcall.com/#sms-otp) to send an SMS message with token or we can call it SMSOTP, its pretty similiar like sms reguler as well, but there is an added token inside, to use it you can call the `$citcall->smsotp()` method.
+
+The API can be called directly, using a simple array of parameters, the keys match the [parameters of the API](https://docs.citcall.com/#sms-otp).
+
+```php
+$token = random_int(10000, 99999); // example generate token
+
+$smsotp = $citcall->sms([
+	'senderid' => 'citcall',
+	'msisdn' => MSISDN,
+	'text' => 'Test message from the Citcall PHP XXXXX', // "XXXXX" will replaced by token param automatically
+	'token' => $token,
+]);
+```
+
+The API response data can be accessed as array properties of the sms. 
+
+```php
+print_r($smsotp);
+```
+
 ### Callback SMS
 
 To add callback on dashboard It is still manually doing by Citcall’s administrator, please send the callback url to our team.
