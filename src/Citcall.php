@@ -375,7 +375,7 @@ class Citcall {
     protected function sendRequest(array $param,$method) {
         $apikey = $this->apikey;
 
-        $auth = base64_encode($apikey);
+        $auth = "Apikey " . $apikey ;
 
         switch ($method) {
             case 'sync_miscall':
