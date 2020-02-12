@@ -4,8 +4,8 @@
 | CITCALL
 |-------------------------------------------------------------------
 | before you connect to the citcall API make sure that:
-| 1. You have read the citcall API documentation
-| 2. your userid has been registered and your IP has been filtered in citcall system
+| You have read the citcall API documentation
+|
 |
 */
 namespace Citcall;
@@ -27,13 +27,6 @@ class Citcall {
     const METHOD_VERIFY_MOTP    = "/verify";
 
     /**
-     * Userid
-     *
-     * @var string
-     */
-    private $userid = "";
-
-    /**
      * API key
      *
      * @var string
@@ -45,15 +38,13 @@ class Citcall {
     /**
      * Constructor - Sets Authorization
      *
-     * The constructor require userid and apikey
+     * The constructor require apikey
      *
-     * @param   string  $userid
      * @param   string  $apikey
      * @return  void
      */
-    function __construct($userid,$apikey) {
+    function __construct($apikey) {
         if(in_array  ('curl', get_loaded_extensions())) {
-            $this->userid = $userid;
             $this->apikey = $apikey;
         } else {
             die("CURL is not available on your web server");
@@ -382,10 +373,9 @@ class Citcall {
      * @return  string
      */
     protected function sendRequest(array $param,$method) {
-        $userid = $this->userid;
         $apikey = $this->apikey;
 
-        $auth = base64_encode($userid . ':' . $apikey);
+        $auth = base64_encode($apikey);
 
         switch ($method) {
             case 'sync_miscall':
