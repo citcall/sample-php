@@ -236,47 +236,38 @@ class Citcall {
             $msisdn = $param['msisdn'];
             $senderid = $param['senderid'];
             $text = $param['text'];
-            $array_baru = array();
-            $array = explode(",",$msisdn);
-            foreach($array as $v) {
-                $msisdn = $this->cleanMsisdn($v);
-                $msisdn = preg_replace('/[^0-9]/', '',$msisdn);
-                if (substr($msisdn,0,2)=='62') {
-                    if(strlen($msisdn) > 10 && strlen($msisdn) < 15) {
-                        $prefix = substr($msisdn,0,5);
-                        if(strlen($msisdn) > 13) {
-                            if($this->isThree($prefix)) {
-                                array_push($array_baru,$msisdn);
-                            } else {
-                                $ret = array(
-                                    "rc" => "06",
-                                    "info" => "invalid msisdn or msisdn has invalid format!"
-                                );
-                                return $ret;
-                            }
-                        } else {
-                            array_push($array_baru,$msisdn);
+            
+            
+            $msisdn = $this->cleanMsisdn($msisdn);
+            $msisdn = preg_replace('/[^0-9]/', '',$msisdn);
+            if (substr($msisdn,0,2)=='62') {
+                if(strlen($msisdn) > 10 && strlen($msisdn) < 15) {
+                    $prefix = substr($msisdn,0,5);
+                    if(!strlen($msisdn) > 13) {
+                        if($this->isThree($prefix)) {
+                            $ret = array(
+                                "rc" => "06",
+                                "info" => "invalid msisdn or msisdn has invalid format!"
+                            );
+                            return $ret;
                         }
-                    } else {
-                        $ret = array(
-                            "rc" => "06",
-                            "info" => "invalid msisdn or msisdn has invalid format!"
-                        );
-                        return $ret;
                     }
                 } else {
+                    $ret = array(
+                        "rc" => "06",
+                        "info" => "invalid msisdn or msisdn has invalid format!"
+                    );
+                    return $ret;
+                }
+            } else {
                     if(strlen($msisdn) > 9 && strlen($msisdn) < 18) {
-                        array_push($array_baru,$msisdn);
-                    } else {
                         $ret = array(
                             "rc" => "06",
                             "info" => "invalid msisdn or msisdn has invalid format!"
                         );
                         return $ret;
                     }
-                }
             }
-            $msisdn = implode(",",$array_baru);
             if(strtolower(trim($senderid)) == "citcall")
                 $senderid = strtoupper($senderid);
             $param_hit = array(
