@@ -13,7 +13,7 @@ namespace Citcall;
 /**
  * Citcall Request Class
  *
- * @version     3
+ * @version     3.0
  * @author      Citcall Dev Team
  * @link        https://docs.citcall.com/
 */
