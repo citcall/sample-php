@@ -13,7 +13,7 @@ namespace Citcall;
 /**
  * Citcall Request Class
  *
- * @version     3
+ * @version     3.0
  * @author      Citcall Dev Team
  * @link        https://docs.citcall.com/
 */
@@ -72,7 +72,7 @@ class Citcall {
                 $msisdn = $this->cleanMsisdn($msisdn);
                 $msisdn = preg_replace('/[^0-9]/', '',$msisdn);
                 if (substr($msisdn,0,2)=='62') {
-                    if(strlen($msisdn) > 10 && strlen($msisdn) < 15) {
+                    if(strlen($msisdn) > 10 && strlen($msisdn) <= 16) {
                         $prefix = substr($msisdn,0,5);
                         if(strlen($msisdn) > 13){
                             if($this->isThree($prefix))
@@ -156,8 +156,8 @@ class Citcall {
                 $continue = false;
                 $msisdn = $this->cleanMsisdn($msisdn);
                 $msisdn = preg_replace('/[^0-9]/', '',$msisdn);
-                if (substr($msisdn,0,2)=='62') {
-                    if(strlen($msisdn) > 10 && strlen($msisdn) < 15) {
+                if (substr($msisdn,0,2) == '62') {
+                    if(strlen($msisdn) > 10 && strlen($msisdn) <= 16) {
                         $prefix = substr($msisdn,0,5);
                         if(strlen($msisdn) > 13){
                             if($this->isThree($prefix))
@@ -236,15 +236,13 @@ class Citcall {
             $msisdn = $param['msisdn'];
             $senderid = $param['senderid'];
             $text = $param['text'];
-            
-            
             $msisdn = $this->cleanMsisdn($msisdn);
             $msisdn = preg_replace('/[^0-9]/', '',$msisdn);
-            if (substr($msisdn,0,2)=='62') {
-                if(strlen($msisdn) > 10 && strlen($msisdn) < 15) {
+            if (substr($msisdn,0,2) == '62') {
+                if(strlen($msisdn) > 10 && strlen($msisdn) <= 16) {
                     $prefix = substr($msisdn,0,5);
-                    if(!strlen($msisdn) > 13) {
-                        if($this->isThree($prefix)) {
+                    if(strlen($msisdn) > 13) {
+                        if(!$this->isThree($prefix)) {
                             $ret = array(
                                 "rc" => "06",
                                 "info" => "invalid msisdn or msisdn has invalid format!"
@@ -260,13 +258,13 @@ class Citcall {
                     return $ret;
                 }
             } else {
-                    if(strlen($msisdn) > 9 && strlen($msisdn) < 18) {
-                        $ret = array(
-                            "rc" => "06",
-                            "info" => "invalid msisdn or msisdn has invalid format!"
-                        );
-                        return $ret;
-                    }
+                if(strlen($msisdn) > 9 && strlen($msisdn) < 18) {
+                    $ret = array(
+                        "rc" => "06",
+                        "info" => "invalid msisdn or msisdn has invalid format!"
+                    );
+                    return $ret;
+                }
             }
             if(strtolower(trim($senderid)) == "citcall")
                 $senderid = strtoupper($senderid);
