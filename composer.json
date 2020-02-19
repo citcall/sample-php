@@ -2,7 +2,6 @@
 	"name": "citcall/api",
 	"description": "Citcall API Request",
 	"license": "MIT",
-	"version": "3.0.0",
 	"authors": [
 		{
 			"name": "Muhammad Chairul",
