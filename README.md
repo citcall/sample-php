@@ -10,7 +10,7 @@ Installation
 To install the PHP client library to your project, we recommend using [Composer](https://getcomposer.org/).
 
 ```bash
-composer require citcall/api:dev-master
+composer require citcall/api
 ```
 
 > You don't need to clone this repository to use this library in your own projects. Use Composer to install it from Packagist.
@@ -38,53 +38,23 @@ If you're using Composer, make sure the autoloader is included in your project's
 require_once "vendor/autoload.php";
 ```
 
-Create a citcall with your userid and API key:
+Create a citcall with your API key:
 
 ```php
-$citcall = new Citcall\Citcall(USERID,APIKEY);
+$citcall = new Citcall\Citcall(APIKEY);
 ```
 
 Examples
 --------
 
-### Synchronous miscall
+### Miscall OTP
 
-To use [Citcall's Miscall Sync API][docs_miscall_sync] to send an Synchronous miscall, call the `$citcall->sync_miscall()` method.
-
-The API can be called directly, using a simple array of parameters, the keys match the [parameters of the API][docs_miscall_sync].
-
-```php
-$sync_miscall = $citcall->sync_miscall([
-	'msisdn' => MSISDN,
-	'gateway' => GATEWAY
-]);
-```
-
-If you want to able to do verify later use this example.
-
-```php
-$sync_miscall = $citcall->sync_miscall([
-	'msisdn' => MSISDN,
-	'gateway' => GATEWAY,
-	'valid_time' => TIME_VALID,
-	'limit_try' => LIMIT_TRY
-]);
-```
-
-The API response data can be accessed as array properties of the sync_miscall. 
-
-```php
-print_r($sync_miscall);
-```
-
-### Asynchronous miscall
-
-To use [Citcall's Miscall Async API][docs_miscall_async] to Asynchronous miscall, call the `$citcall->async_miscall()` method.
+To use [Citcall's Miscall Async API][docs_miscall_async] to Asynchronous miscall, call the `$citcall->miscall()` method.
 
 The API can be called directly, using a simple array of parameters, the keys match the [parameters of the API][docs_miscall_async].
 
 ```php
-$async_miscall = $citcall->async_miscall([
+$motp = $citcall->miscall([
 	'msisdn' => MSISDN,
 	'gateway' => GATEWAY
 ]);
@@ -93,45 +63,27 @@ $async_miscall = $citcall->async_miscall([
 If you want to able to do verify later use this example.
 
 ```php
-$async_miscall = $citcall->async_miscall([
+$motp = $citcall->miscall([
 	'msisdn' => MSISDN,
 	'gateway' => GATEWAY,
-	'valid_time' => TIME_VALID,
-	'limit_try' => LIMIT_TRY
+	'valid_time' => TIME_VALID, //optional - valid time in seconds
+	'limit_try' => LIMIT_TRY //optional - maximum attempt
+	'callback_url' => CALLBACK_URL //Webhook URL where delivery status for the result will be posted (Overwrites your default account callback URL).
 ]);
 ```
 
 The API response data can be accessed as array properties of the async_miscall. 
 
 ```php
-print_r($async_miscall);
+print_r($motp);
 ```
 
-### Callback Asynchronous miscall
+### Callback Miscall OTP
 
-To add callback on dashboard It is still manually doing by Citcall’s administrator, please send the callback url to our team.
+You can configure your default callback URL for your account at our [Dashboard][dashboard] on API menu.
+You can also overwrite the default callback URL on by specifying a different **callback_url** value in your API requests.
 
-See this [Example](https://github.com/citcall/sample-php/blob/master/examples/callback_async_miscall.php) to use callback.
-
-### Verify MOTP
-
-To use [Citcall's Verify MOTP API][docs_verify] to verify MOTP, call the `$citcall->verify_motp()` method.
-
-The API can be called directly, using a simple array of parameters, the keys match the [parameters of the API][docs_verify].
-
-```php
-$verify_motp = $citcall->verify_motp([
-	'msisdn' => MSISDN,
-	'trxid' => TRXID,
-	'token' => TOKEN
-]);
-```
-
-The API response data can be accessed as array properties of the verify_motp. 
-
-```php
-print_r($verify_motp);
-```
+See this [Example](https://github.com/citcall/sample-php/blob/master/examples/callback_miscall.php) to use callback.
 
 ### SMS
 
@@ -155,9 +107,59 @@ print_r($sms);
 
 ### Callback SMS
 
-To add callback on dashboard It is still manually doing by Citcall’s administrator, please send the callback url to our team.
+You can configure your default callback URL for your account at our [Dashboard][dashboard] on API menu.
+You can also overwrite the default callback URL on by specifying a different **callback_url** value in your API requests.
 
 See this [Example](https://github.com/citcall/sample-php/blob/master/examples/callback_sms.php) to use callback.
+
+
+### SMSOTP
+
+To use [Citcall's SMSOTP API][docs_smsotp] to send an SMS message with OTP text, call the `$citcall->smsotp()` method.
+
+The API can be called directly, using a simple array of parameters, the keys match the [parameters of the API][docs_smsotp].
+
+```php
+$smsotp = $citcall->smsotp([
+	'senderid' => 'citcall',
+	'msisdn' => MSISDN,
+	'text' => 'Test message OTP from the Citcall PHP'
+]);
+```
+
+The API response data can be accessed as array properties of the sms. 
+
+```php
+print_r($smsotp);
+```
+
+### Callback SMSOTP
+
+You can configure your default callback URL for your account at our [Dashboard][dashboard] on API menu.
+You can also overwrite the default callback URL on by specifying a different **callback_url** value in your API requests.
+
+See this [Example](https://github.com/citcall/sample-php/blob/master/examples/callback_smsotp.php) to use callback.
+
+
+### Verify OTP Code
+
+To use [Citcall's Verify API][docs_verify] to verify OTP, call the `$citcall->verify()` method.
+
+The API can be called directly, using a simple array of parameters, the keys match the [parameters of the API][docs_verify].
+
+```php
+$verify = $citcall->verify([
+	'msisdn' => MSISDN,
+	'trxid' => TRXID,
+	'token' => TOKEN
+]);
+```
+
+The API response data can be accessed as array properties of the verify_motp. 
+
+```php
+print_r($verify);
+```
 
 Contribute
 ----------
@@ -172,5 +174,7 @@ Contribute
 [docs_miscall_sync]: https://docs.citcall.com/#miscall
 [docs_miscall_async]: https://docs.citcall.com/async/
 [docs_sms]: https://docs.citcall.com/#sms
+[docs_smsotp]: https://docs.citcall.com/#sms-otp
 [docs_verify]: https://docs.citcall.com/#verify
 [the repository]: https://github.com/citcall/sample-php
+[dashboard]: https://dashboard.citcall.com
