@@ -95,7 +95,8 @@ The API can be called directly, using a simple array of parameters, the keys mat
 $sms = $citcall->sms([
 	'senderid' => 'citcall',
 	'msisdn' => MSISDN,
-	'text' => 'Test message from the Citcall PHP'
+	'text' => 'Test message from the Citcall PHP',
+	'callback_url' => CALLBACK_URL //Webhook URL where delivery status for the result will be posted (Overwrites your default account callback URL).
 ]);
 ```
 
@@ -123,7 +124,8 @@ The API can be called directly, using a simple array of parameters, the keys mat
 $smsotp = $citcall->smsotp([
 	'senderid' => 'citcall',
 	'msisdn' => MSISDN,
-	'text' => 'Test message OTP from the Citcall PHP'
+	'text' => 'Test message OTP from the Citcall PHP',
+	'callback_url' => CALLBACK_URL //Webhook URL where delivery status for the result will be posted (Overwrites your default account callback URL).
 ]);
 ```
 
