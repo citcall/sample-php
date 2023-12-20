@@ -96,3 +96,4 @@ nb-configuration.xml
 
 /results/
 /phpunit*.xml
+test.php
