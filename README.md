@@ -63,12 +63,10 @@ $motp = $citcall->miscall([
 If you want to able to do verify later use this example.
 
 ```php
-$motp = $citcall->miscall([
+$motp = $citcall->motp([
 	'msisdn' => MSISDN,
 	'gateway' => GATEWAY,
-	'valid_time' => TIME_VALID, //optional - valid time in seconds
-	'limit_try' => LIMIT_TRY //optional - maximum attempt
-	'callback_url' => CALLBACK_URL //Webhook URL where delivery status for the result will be posted (Overwrites your default account callback URL).
+	'callback_url' => CALLBACK_URL //optional - Webhook URL where delivery status for the result will be posted (Overwrites your default account callback URL).
 ]);
 ```
 
@@ -96,7 +94,7 @@ $sms = $citcall->sms([
 	'senderid' => 'citcall',
 	'msisdn' => MSISDN,
 	'text' => 'Test message from the Citcall PHP',
-	'callback_url' => CALLBACK_URL //Webhook URL where delivery status for the result will be posted (Overwrites your default account callback URL).
+	'callback_url' => CALLBACK_URL //optional - Webhook URL where delivery status for the result will be posted (Overwrites your default account callback URL).
 ]);
 ```
 
@@ -125,7 +123,7 @@ $smsotp = $citcall->smsotp([
 	'senderid' => 'citcall',
 	'msisdn' => MSISDN,
 	'text' => 'Test message OTP from the Citcall PHP',
-	'callback_url' => CALLBACK_URL //Webhook URL where delivery status for the result will be posted (Overwrites your default account callback URL).
+	'callback_url' => CALLBACK_URL //optional - Webhook URL where delivery status for the result will be posted (Overwrites your default account callback URL).
 ]);
 ```
 
